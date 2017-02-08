@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="holiday" xmlns="http://jbpm.org/4.4/jpdl">
+
+   <start name="start1" g="165,31,48,48">
+      <transition name="to 员工请假申请" to="员工请假申请" g="-85,-19"/>
+   </start>
+   <end name="end1" g="169,367,48,48"/>
+   <task name="员工请假申请" g="143,141,92,52">
+      <transition name="to 部门经理审批" to="部门经理审批" g="-85,-19"/>
+   </task>
+   <task name="部门经理审批" g="146,270,92,52">
+      <transition name="to end1" to="end1" g="-46,-18"/>
+   </task>
+</process>
