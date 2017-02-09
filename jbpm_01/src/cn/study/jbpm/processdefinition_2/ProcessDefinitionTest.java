@@ -1,8 +1,11 @@
 package cn.study.jbpm.processdefinition_2;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.zip.ZipInputStream;
 
@@ -60,13 +63,43 @@ public class ProcessDefinitionTest {
 		ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
 		List<ProcessDefinition> list = processDefinitionQuery.list();
 		System.out.println(list.size());
-		for(ProcessDefinition pd : list){
-			System.out.println("ID:  "+pd.getDeploymentId());
-			System.out.println("名称:  "+pd.getName());
+		for (ProcessDefinition pd : list) {
+			System.out.println("ID:  " + pd.getDeploymentId());
+			System.out.println("名称:  " + pd.getName());
 			System.out.println("Key:   " + pd.getKey());
 			System.out.println("Version:   " + pd.getVersion());
 		}
 
+	}
+
+	@Test
+	// 查询 holiday-2流程定义对应流程图
+	public void demo4() throws IOException {
+		// 步骤一: 获得流程引擎
+		ProcessEngine processEngine = new Configuration().buildProcessEngine();
+		// 步骤二: 获得对应的 Service
+		RepositoryService repositoryService = processEngine.getRepositoryService();
+		// 步骤三: 相关操作
+		// 先根据流程定义编号 pdId, 查询流程发布编号 deploymentId
+		ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
+		processDefinitionQuery.processDefinitionId("holiday-2");
+		ProcessDefinition processDefinition = processDefinitionQuery.uniqueResult();
+		String deploymentId = processDefinition.getDeploymentId();
+		
+		// 获取资源名称
+		String resourceName = processDefinition.getImageResourceName();
+		System.out.println("资源名称：  " + resourceName);
+		
+		// 获取图片资源流
+		InputStream is =repositoryService.getResourceAsStream(deploymentId, resourceName);
+		OutputStream os = new FileOutputStream("/Users/poirot/Desktop/holiday.png");
+		int b = -1;
+		while((b = is.read()) != -1){
+			os.write(b);
+		}
+		is.close();
+		os.close();
+	
 	}
 
 }
