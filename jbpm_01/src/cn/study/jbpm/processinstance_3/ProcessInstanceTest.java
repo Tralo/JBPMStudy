@@ -33,7 +33,7 @@ public class ProcessInstanceTest {
 		ExecutionService executionService = processEngine.getExecutionService();
 		// 步骤三: 根据实例id，向后流转
 		// executionService.signalExecutionById("holiday.50001","to 部门经理审批");
-		executionService.signalExecutionById("holiday.50001", "to end1");
+		executionService.signalExecutionById("holiday.10001", "to end1");
 	}
 
 	@Test
