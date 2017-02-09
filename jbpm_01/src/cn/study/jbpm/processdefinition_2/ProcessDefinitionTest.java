@@ -85,21 +85,33 @@ public class ProcessDefinitionTest {
 		processDefinitionQuery.processDefinitionId("holiday-2");
 		ProcessDefinition processDefinition = processDefinitionQuery.uniqueResult();
 		String deploymentId = processDefinition.getDeploymentId();
-		
+
 		// 获取资源名称
 		String resourceName = processDefinition.getImageResourceName();
 		System.out.println("资源名称：  " + resourceName);
-		
+
 		// 获取图片资源流
-		InputStream is =repositoryService.getResourceAsStream(deploymentId, resourceName);
+		InputStream is = repositoryService.getResourceAsStream(deploymentId, resourceName);
 		OutputStream os = new FileOutputStream("/Users/poirot/Desktop/holiday.png");
 		int b = -1;
-		while((b = is.read()) != -1){
+		while ((b = is.read()) != -1) {
 			os.write(b);
 		}
 		is.close();
 		os.close();
-	
+	}
+
+	@Test
+	// 删除流程定义 (根据 id --- deployment表 主键dbid)
+	public void demo5() {
+		// 步骤一: 获得流程引擎
+		ProcessEngine processEngine = new Configuration().buildProcessEngine();
+		// 步骤二: 获得对应的 Service
+		RepositoryService repositoryService = processEngine.getRepositoryService();
+		// 步骤三: 删除流程定义
+		repositoryService.deleteDeploymentCascade("20001");
+		
+		
 	}
 
 }
