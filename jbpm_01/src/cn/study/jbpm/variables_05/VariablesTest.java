@@ -3,6 +3,8 @@ package cn.study.jbpm.variables_05;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.jbpm.api.Configuration;
 import org.jbpm.api.Execution;
 import org.jbpm.api.ExecutionService;
@@ -55,14 +57,62 @@ public class VariablesTest {
 		// 读取变量
 		int pnum = (int) taskService.getVariable("50003", "pnum");
 		System.out.println("pnum :    " + pnum);
-		
-		
-		//写入变量
-		Map<String, Object> variables = new HashMap<String,Object>();
+
+		// 写入变量
+		Map<String, Object> variables = new HashMap<String, Object>();
 		variables.put("weather", "多云无雨");
 		taskService.setVariables("50003", variables);
-		
-		
+	}
+
+	@Test
+	// 测试保存可序列化的对象
+	public void demo4() {
+		// 1. 流程引擎
+		ProcessEngine processEngine = new Configuration().buildProcessEngine();
+		// 2. 获得对应 Service
+		ExecutionService executionService = processEngine.getExecutionService();
+
+		// 保存 User 对象
+		User user = new User();
+		user.setId(1001);
+		user.setName("张三");
+
+		executionService.setVariable("holiday.50001", "user", user);
+
+	}
+
+	@Test
+	// 读取保存后的序列化对象
+	public void demo5() {
+		// 1. 流程引擎
+		ProcessEngine processEngine = new Configuration().buildProcessEngine();
+		// 2. 获得对应 Service
+		ExecutionService executionService = processEngine.getExecutionService();
+		// 读取 User 对象
+		User user = (User) executionService.getVariable("holiday.50001", "user");
+		System.out.println("user:  " + user.toString());
+
+	}
+
+	@Test
+	// 测试保存持久化 PO 对象
+	public void demo6() {
+		// 1. 流程引擎
+		ProcessEngine processEngine = new Configuration().buildProcessEngine();
+		// 2. 获得对应 Service
+		ExecutionService executionService = processEngine.getExecutionService();
+		Session session = new org.hibernate.cfg.Configuration().configure("jbpm.hibernate.cfg.xml")
+				.buildSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		Book book = new Book();
+		book.setBookName("《JBPM入门指南》");
+		session.save(book);
+		tx.commit();
+
+		executionService.setVariable("holiday.50001", "book", book);
+
+		session.clear();
+
 	}
 
 }

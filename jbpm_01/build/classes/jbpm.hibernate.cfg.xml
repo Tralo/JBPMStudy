@@ -22,5 +22,7 @@
      <mapping resource="jbpm.task.hbm.xml" />
      <mapping resource="jbpm.identity.hbm.xml" />
      
+     <mapping resource="cn/study/jbpm/variables_05/Book.hbm.xml" />
+     
   </session-factory>
 </hibernate-configuration>
