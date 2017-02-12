@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="state" xmlns="http://jbpm.org/4.4/jpdl">
+   <start g="178,32,48,48" name="start1">
+      <transition name="to 去网银给支付宝" to="去网银给支付宝" g="-96,-19"/>
+   </start>
+   <end g="178,403,48,48" name="end1"/>
+   <task g="156,149,92,52" name="去网银给支付宝">
+      <transition name="to 等待支付宝回应" to="等待支付宝回应" g="-96,-19"/>
+   </task>
+   <state name="等待支付宝回应" g="155,273,92,52">
+      <transition name="to end1" to="end1" g="-46,-18"/>
+   </state>
+</process>

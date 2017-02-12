@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="start-end" xmlns="http://jbpm.org/4.4/jpdl">
+   <start name="start1" g="200,75,48,48">
+      <transition name="to 财务报销审批" to="财务报销审批" g="-85,-19"/>
+   </start>
+   <end-cancel name="cancel1" g="392,304,48,48"/>
+   <task name="财务报销审批" g="174,159,92,52">
+      <transition name="to 经理审批" to="经理审批" g="-63,-19"/>
+   </task>
+   <end name="end1" g="208,380,48,48"/>
+   <task name="经理审批" g="177,279,92,52">
+      <transition name="to end1" to="end1" g="-46,-18"/>
+      <transition name="to cancel1" to="cancel1" g="-61,-18"/>
+   </task>
+</process>
