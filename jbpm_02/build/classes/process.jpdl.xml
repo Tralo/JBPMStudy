@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<process name="测试流程" key="test_process" xmlns="http://jbpm.org/4.4/jpdl">
-   <start name="start1" g="137,83,48,48">
+<process key="test_process" name="测试流程" xmlns="http://jbpm.org/4.4/jpdl">
+   <start g="190,12,48,48" name="start1">
       <transition name="to end1" to="end1" g="-46,-18"/>
    </start>
-   <end name="end1" g="138,177,48,48"/>
+   <end g="192,143,48,48" name="end1"/>
 </process>
