@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="swimlanes" xmlns="http://jbpm.org/4.4/jpdl">
+   <start g="226,12,48,48" name="start1">
+      <transition g="-63,-19" name="to 报销申请" to="报销申请"/>
+   </start>
+   <end g="227,432,48,48" name="end1"/>
+   <swimlane name="commitperson" candidate-users="张三,李四,王五"></swimlane>
+   <task g="206,119,92,52" name="报销申请" swimlane="commitperson">
+      <transition g="-41,-19" name="to 发钱" to="发钱"/>
+   </task>
+   <task g="207,210,92,52" name="发钱">
+      <transition g="-41,-19" name="to 签字" to="签字"/>
+   </task>
+   <task g="208,310,92,52" name="签字" swimlane="commitperson">
+      <transition g="-46,-18" name="to end1" to="end1"/>
+   </task>
+</process>
